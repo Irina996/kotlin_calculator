@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.0.3](https://github.com/Irina996/mobile_dev_start/compare/v1.0.2...v1.0.3) (2021-10-04)
+
+
+### Bug Fixes
+
+* input ([121b634](https://github.com/Irina996/mobile_dev_start/commit/121b6346d2c896078f1bf7c89582e3b64ab8b9a2))
+
 ### [1.0.2](https://github.com/Irina996/mobile_dev_start/compare/v1.0.1...v1.0.2) (2021-10-04)
 
 
