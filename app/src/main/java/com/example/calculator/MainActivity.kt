@@ -270,14 +270,12 @@ class MainActivity : AppCompatActivity() {
                     return
             }
 
-            var str = calcOperations.text.toString()
-            if (str[str.length - 1] == op) return
-            val operators = "+-*/^%√"
-            for (operator in operators) {
-                if (str[str.length - 1] == operator)
-                    str = str.substring(0, str.length - 1)
-            }
-            calcOperations.text = str.plus(op)
+            val str = calcOperations.text.toString()
+            if (str[str.length - 1] == op)
+                return
+            if (isNotOperation(str[str.length - 1]))
+                if (op == '-' || str[str.length - 1] != '(')
+                    calcOperations.text = str.plus(op)
         } catch (e: Exception) {
             Log.d("Error", "${e.message}")
         }
