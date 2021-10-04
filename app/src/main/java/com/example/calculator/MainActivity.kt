@@ -75,30 +75,30 @@ class MainActivity : AppCompatActivity() {
         hyperbolaBtn.setOnClickListener { setTextFields("1/") }
         factorialBtn.setOnClickListener {
             val str = calcOperations.text.toString()
-            if ( str.isNotEmpty() && str[str.length - 1] != '(' && str[str.length - 1] != '%' &&
-                str[str.length - 1] != '!' && str[str.length - 1] != '^') {
+            if ( str.isNotEmpty() && str[str.length - 1] != '(' &&
+                isNotOperation(str[str.length - 1])) {
                 setTextFields("!")
             }
         }
         sqrtBtn.setOnClickListener { setTextFields("√") }
         squareBtn.setOnClickListener {
             val str = calcOperations.text.toString()
-            if ( str.isNotEmpty() && str[str.length - 1] != '(' && str[str.length - 1] != '%' &&
-                str[str.length - 1] != '!' && str[str.length - 1] != '^') {
+            if ( str.isNotEmpty() && str[str.length - 1] != ')' &&
+                isNotOperation(str[str.length - 1])) {
                 setTextFields("^2")
             }
         }
         exponentiationBtn.setOnClickListener {
             val str = calcOperations.text.toString()
-            if ( str.isNotEmpty() && str[str.length - 1] != '(' && str[str.length - 1] != '%' &&
-                str[str.length - 1] != '!' && str[str.length - 1] != '^') {
+            if ( str.isNotEmpty() && str[str.length - 1] != '(' &&
+                isNotOperation(str[str.length - 1])) {
                 setTextFields("^")
             }
         }
         modBtn.setOnClickListener {
             val str = calcOperations.text.toString()
-            if ( str.isNotEmpty() && str[str.length - 1] != '(' && str[str.length - 1] != '%' &&
-                str[str.length - 1] != '!' && str[str.length - 1] != '^') {
+            if ( str.isNotEmpty() && str[str.length - 1] != '(' &&
+                isNotOperation(str[str.length - 1])) {
                 setSimpleOperator('%')
             }
         }
@@ -229,6 +229,8 @@ class MainActivity : AppCompatActivity() {
             '-' -> false
             '+' -> false
             '*' -> false
+            '%' -> false
+            '√' -> false
             else -> true
         }
     }
@@ -270,7 +272,7 @@ class MainActivity : AppCompatActivity() {
 
             var str = calcOperations.text.toString()
             if (str[str.length - 1] == op) return
-            val operators = "+-*/"
+            val operators = "+-*/^%√"
             for (operator in operators) {
                 if (str[str.length - 1] == operator)
                     str = str.substring(0, str.length - 1)
