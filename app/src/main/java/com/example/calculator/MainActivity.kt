@@ -205,10 +205,12 @@ class MainActivity : AppCompatActivity() {
         }
         val op = calcOperations.text.toString()
         if (op.isNotEmpty() && isDigit(op[op.length - 1].toString()) &&
-            !isDigit(str) && isNotOperation(str[0]) && isNotBracket(str[0]))
+            !isDigit(str) && (isNotOperation(str[0]) || str[0] == '√')
+            && isNotBracket(str[0]))
             calcOperations.append("*")
         if (op.isNotEmpty() && isDigit(str) && !isDigit(op[op.length - 1].toString()) &&
-             isNotOperation(op[op.length - 1]) && isNotBracket(op[op.length - 1]))
+            (isNotOperation(op[op.length - 1]) || op[op.length - 1] == '!') &&
+            op[op.length - 1] != '(')
             calcOperations.append("*")
         calcOperations.append(str)
     }
