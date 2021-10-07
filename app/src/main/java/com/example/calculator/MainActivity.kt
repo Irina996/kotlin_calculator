@@ -34,20 +34,31 @@ class MainActivity : AppCompatActivity() {
 
         commaBtn.setOnClickListener{
             val str = calcOperations.text.toString()
-            if (str.indexOf('.') != -1) {
-                val indexOfComma = str.indexOf('.')
-                val listOfInd = listOf(str.lastIndexOf('+'),
-                    str.lastIndexOf('-'),
-                    str.lastIndexOf('*'),
-                    str.lastIndexOf('/'))
-                var indexOfStart = listOfInd.maxOrNull() ?: 0
-                if (indexOfStart == -1)
-                    indexOfStart = 0
-                if (indexOfStart > indexOfComma)
+            if (str.isNotEmpty()) {
+                if (str[str.length - 1] != '.' && str.indexOf('.') != -1) {
+                    val indexOfComma = str.indexOf('.')
+                    val listOfInd = listOf(
+                        str.lastIndexOf('+'),
+                        str.lastIndexOf('-'),
+                        str.lastIndexOf('*'),
+                        str.lastIndexOf('/')
+                    )
+                    var indexOfStart = listOfInd.maxOrNull() ?: 0
+                    if (indexOfStart == -1)
+                        indexOfStart = 0
+                    if (indexOfStart > indexOfComma) {
+                        if (str.isNotEmpty() && str[str.length - 1] != '(' &&
+                            isNotOperation(str[str.length - 1])
+                        ) {
+                            setTextFields(".")
+                        }
+                    }
+                } else if (str[str.length - 1] != '.' && str[str.length - 1] != '(' &&
+                    isNotOperation(str[str.length - 1])
+                ) {
                     setTextFields(".")
+                }
             }
-            else
-                setTextFields(".")
         }
 
         percentBtn.setOnClickListener{
@@ -76,7 +87,7 @@ class MainActivity : AppCompatActivity() {
         factorialBtn.setOnClickListener {
             val str = calcOperations.text.toString()
             if ( str.isNotEmpty() && str[str.length - 1] != '(' &&
-                isNotOperation(str[str.length - 1])) {
+                isNotOperation(str[str.length - 1]) && str[str.length - 1] != '.') {
                 setTextFields("!")
             }
         }
@@ -84,21 +95,21 @@ class MainActivity : AppCompatActivity() {
         squareBtn.setOnClickListener {
             val str = calcOperations.text.toString()
             if ( str.isNotEmpty() && str[str.length - 1] != ')' &&
-                isNotOperation(str[str.length - 1])) {
+                isNotOperation(str[str.length - 1]) && str[str.length - 1] != '.') {
                 setTextFields("^2")
             }
         }
         exponentiationBtn.setOnClickListener {
             val str = calcOperations.text.toString()
             if ( str.isNotEmpty() && str[str.length - 1] != '(' &&
-                isNotOperation(str[str.length - 1])) {
+                isNotOperation(str[str.length - 1]) && str[str.length - 1] != '.') {
                 setTextFields("^")
             }
         }
         modBtn.setOnClickListener {
             val str = calcOperations.text.toString()
             if ( str.isNotEmpty() && str[str.length - 1] != '(' &&
-                isNotOperation(str[str.length - 1])) {
+                isNotOperation(str[str.length - 1]) && str[str.length - 1] != '.') {
                 setSimpleOperator('%')
             }
         }
@@ -121,7 +132,7 @@ class MainActivity : AppCompatActivity() {
         bracket2Btn.setOnClickListener {
             val str = calcOperations.text.toString()
             if (str.isNotEmpty() && str[str.length - 1] != '(' &&
-                isNotOperation(str[str.length - 1])) {
+                isNotOperation(str[str.length - 1]) && str[str.length - 1] != '.') {
                 setTextFields(")")
             }
         }
@@ -203,14 +214,16 @@ class MainActivity : AppCompatActivity() {
                 calcResult.text = ""
             }
         }
+
+        // adding '*'
         val op = calcOperations.text.toString()
         if (op.isNotEmpty() && isDigit(op[op.length - 1].toString()) &&
             !isDigit(str) && (isNotOperation(str[0]) || str[0] == '√')
-            && isNotBracket(str[0]))
+            && str [0]!= ')' && str[0] != '.')
             calcOperations.append("*")
         if (op.isNotEmpty() && isDigit(str) && !isDigit(op[op.length - 1].toString()) &&
             (isNotOperation(op[op.length - 1]) || op[op.length - 1] == '!') &&
-            op[op.length - 1] != '(')
+            op[op.length - 1] != '(' && op[op.length - 1] != '.')
             calcOperations.append("*")
         calcOperations.append(str)
     }
@@ -265,17 +278,13 @@ class MainActivity : AppCompatActivity() {
                 }
             }
 
-            if (calcOperations.text == "") {
-                if (op == '-')
-                    calcOperations.text = "-"
-                else
-                    return
-            }
+            if (calcOperations.text == "")
+                return
 
             val str = calcOperations.text.toString()
             if (str[str.length - 1] == op)
                 return
-            if (isNotOperation(str[str.length - 1]))
+            if (isNotOperation(str[str.length - 1]) && str[str.length - 1] != '.')
                 if (op == '-' || str[str.length - 1] != '(')
                     calcOperations.text = str.plus(op)
         } catch (e: Exception) {
@@ -351,8 +360,6 @@ class MainActivity : AppCompatActivity() {
             0 -> return BigInteger.ONE
             1 -> return BigInteger.ONE
         }
-        //factorial = factorial.multiply(BigInteger.valueOf(num.toLong()))
-        //return number*calcFactorial(number - 1)
         return calcFactorial(number - 1).multiply(BigInteger.valueOf(number.toLong()))
     }
 

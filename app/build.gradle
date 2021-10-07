@@ -32,7 +32,7 @@ android {
         signingConfig signingConfigs.release
     }
 
-    /*// Specifies one flavor dimension.
+    // Specifies one flavor dimension.
     flavorDimensions "version"
     productFlavors {
         create("demo") {
@@ -48,8 +48,10 @@ android {
             dimension = "version"
             applicationIdSuffix = ".full"
             versionNameSuffix = "-full"
+            versionCode 4
+            versionName "1.0.3"
         }
-    }*/
+    }
 
     buildTypes {
         release {
