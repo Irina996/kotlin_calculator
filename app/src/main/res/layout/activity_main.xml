@@ -87,11 +87,13 @@
             <TextView
                 android:id="@+id/exponentiationBtn"
                 style="@style/NullButton"/>
+
             <TextView
                 android:id="@+id/acBtn"
                 style="@style/ActionButton"
                 android:enabled="true"
-                android:text="@string/ac"/>
+                android:text="@string/ac" />
+
             <TextView
                 android:id="@+id/backBtn"
                 style="@style/ActionButton"

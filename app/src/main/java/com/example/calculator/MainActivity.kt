@@ -126,7 +126,7 @@ class MainActivity : AppCompatActivity() {
                         setTextFields("(")
                 }
             } catch (e: Exception) {
-                Log.d("Error", "${e.message}")
+                Log.d("Error", "Message: ${e.message}")
             }
         }
         bracket2Btn.setOnClickListener {
@@ -288,7 +288,7 @@ class MainActivity : AppCompatActivity() {
                 if (op == '-' || str[str.length - 1] != '(')
                     calcOperations.text = str.plus(op)
         } catch (e: Exception) {
-            Log.d("Error", "${e.message}")
+            Log.d("Error", "Message: ${e.message}")
         }
     }
 
@@ -345,7 +345,7 @@ class MainActivity : AppCompatActivity() {
             try {
                 factStr = calcFactorial(num).toString()
             } catch (e: Exception) {
-                Log.d("Error", "${e.message}")
+                Log.d("Error", "Message: ${e.message}")
                 return "error"
             }
             str = firstPart.plus(factStr).plus(lastPart)

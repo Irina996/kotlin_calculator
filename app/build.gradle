@@ -4,6 +4,34 @@ plugins {
     id 'kotlin-android-extensions'
 }
 
+def getVersionCode = { ->
+    try {
+        def code = new ByteArrayOutputStream()
+        exec {
+            commandLine 'git', 'tag', '--list'
+            standardOutput = code
+        }
+        return code.toString().split("\n").size()
+    }
+    catch (ignored) {
+        return -1
+    }
+}
+
+def getVersionName = { ->
+    try {
+        def stdout = new ByteArrayOutputStream()
+        exec {
+            commandLine 'git', 'describe', '--tags'
+            standardOutput = stdout
+        }
+        return stdout.toString().trim()
+    }
+    catch (ignored) {
+        return null
+    }
+}
+
 android {
     signingConfigs {
         debug {
@@ -35,7 +63,14 @@ android {
     // Specifies one flavor dimension.
     flavorDimensions "version"
     productFlavors {
-        create("demo") {
+        create("full") {
+            dimension = "version"
+            applicationIdSuffix = ".full"
+            versionNameSuffix = "-full"
+            versionCode getVersionCode()
+            versionName getVersionName()
+        }
+        /*create("demo") {
             // Assigns this product flavor to the "version" flavor dimension.
             // If you are using only one dimension, this property is optional,
             // and the plugin automatically assigns all the module's flavors to
@@ -43,14 +78,7 @@ android {
             dimension = "version"
             applicationIdSuffix = ".demo"
             versionNameSuffix = "-demo"
-        }
-        create("full") {
-            dimension = "version"
-            applicationIdSuffix = ".full"
-            versionNameSuffix = "-full"
-            versionCode 4
-            versionName "1.0.3"
-        }
+        }*/
     }
 
     buildTypes {
