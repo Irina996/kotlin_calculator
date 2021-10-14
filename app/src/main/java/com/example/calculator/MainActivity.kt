@@ -10,6 +10,7 @@ import kotlin.math.PI
 import kotlin.math.pow
 
 class MainActivity : AppCompatActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
@@ -468,5 +469,19 @@ class MainActivity : AppCompatActivity() {
                 bracketCount -= 1
         }
         return bracketCount
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+
+        calcOperations.text = savedInstanceState.getString("operations")
+        calcResult.text = savedInstanceState.getString("result")
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        super.onSaveInstanceState(outState)
+
+        outState.putString("operations", calcOperations.text.toString())
+        outState.putString("result", calcResult.text.toString())
     }
 }
