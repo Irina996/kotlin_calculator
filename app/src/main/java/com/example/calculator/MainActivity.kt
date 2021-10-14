@@ -120,7 +120,7 @@ class MainActivity : AppCompatActivity() {
         bracket1Btn.setOnClickListener {
             val str = calcOperations.text.toString()
             try {
-                if (str.isNotEmpty() && isNotBracket(str[str.length - 1])) {
+                if (str.isNotEmpty() && str[str.length - 1] != ')') {
                     setTextFields("(")
                 } else {
                     if (str.isEmpty())
@@ -227,14 +227,6 @@ class MainActivity : AppCompatActivity() {
             op[op.length - 1] != '(' && op[op.length - 1] != '.')
             calcOperations.append("*")
         calcOperations.append(str)
-    }
-
-    private fun isNotBracket(ch: Char): Boolean {
-        return when (ch) {
-            ')' -> false
-            '(' -> false
-            else -> true
-        }
     }
 
     private fun isNotOperation(ch: Char): Boolean {
