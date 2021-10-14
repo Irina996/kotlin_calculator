@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.1.1](https://github.com/Irina996/mobile_dev_start/compare/v1.1.0...v1.1.1) (2021-10-14)
+
+
+### Bug Fixes
+
+* bracket input ([4bfe921](https://github.com/Irina996/mobile_dev_start/commit/4bfe9215ab7524debcda2ab7ef322058e91546dc))
+
 ## [1.1.0](https://github.com/Irina996/mobile_dev_start/compare/v1.0.5...v1.1.0) (2021-10-14)
 
 
