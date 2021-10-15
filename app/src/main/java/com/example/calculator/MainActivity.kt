@@ -59,7 +59,6 @@ class MainActivity : AppCompatActivity() {
                 ) {
                     setTextFields(".")
                 }
-
             }
         }
 
@@ -70,6 +69,7 @@ class MainActivity : AppCompatActivity() {
                 if (str != "") {
                     val opStr = "+-*/"
                     for (char in opStr) {
+
                         if (char in str)
                             str = str.substring(str.lastIndexOf(char) + 1, str.length)
                     }
