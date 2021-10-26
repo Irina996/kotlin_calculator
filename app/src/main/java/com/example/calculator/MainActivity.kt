@@ -49,14 +49,13 @@ class MainActivity : AppCompatActivity() {
                         indexOfStart = 0
                     if (indexOfStart > indexOfComma) {
                         if (str.isNotEmpty() && str[str.length - 1] != '(' &&
-                            isNotOperation(str[str.length - 1])
+                            isNotOperation(str[str.length - 1]) &&
+                            isDigit(str[str.length - 1].toString())
                         ) {
                             setTextFields(".")
                         }
                     }
-                } else if (str[str.length - 1] != '.' && str[str.length - 1] != '(' &&
-                    isNotOperation(str[str.length - 1])
-                ) {
+                } else if (isDigit(str[str.length - 1].toString())) {
                     setTextFields(".")
                 }
             }
@@ -83,8 +82,20 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        expBtn.setOnClickListener { setTextFields("e") }
-        piBtn.setOnClickListener { setTextFields("pi") }
+        expBtn.setOnClickListener {
+            val str = calcOperations.text.toString()
+            if (str.isEmpty())
+                setTextFields("e")
+            else if(str[str.length - 1] != '.')
+                setTextFields("e")
+        }
+        piBtn.setOnClickListener {
+            val str = calcOperations.text.toString()
+            if (str.isEmpty())
+                setTextFields("pi")
+            else if(str[str.length - 1] != '.')
+                setTextFields("pi")
+        }
         hyperbolaBtn.setOnClickListener { setTextFields("1/") }
         factorialBtn.setOnClickListener {
             val str = calcOperations.text.toString()
@@ -121,7 +132,7 @@ class MainActivity : AppCompatActivity() {
         bracket1Btn.setOnClickListener {
             val str = calcOperations.text.toString()
             try {
-                if (str.isNotEmpty() && str[str.length - 1] != ')') {
+                if (str.isNotEmpty() && str[str.length - 1] != ')' && str[str.length - 1] != '.') {
                     setTextFields("(")
                 } else {
                     if (str.isEmpty())
@@ -139,9 +150,27 @@ class MainActivity : AppCompatActivity() {
             }
         }
 
-        sinBtn.setOnClickListener { setTextFields("sin(") }
-        cosBtn.setOnClickListener { setTextFields("cos(") }
-        tanBtn.setOnClickListener { setTextFields("tan(") }
+        sinBtn.setOnClickListener {
+            val str = calcOperations.text.toString()
+            if (str.isEmpty())
+                setTextFields("sin(")
+            else if(str[str.length - 1] != '.')
+                setTextFields("sin(")
+        }
+        cosBtn.setOnClickListener {
+            val str = calcOperations.text.toString()
+            if (str.isEmpty())
+                setTextFields("cos(")
+            else if(str[str.length - 1] != '.')
+                setTextFields("cos(")
+        }
+        tanBtn.setOnClickListener {
+            val str = calcOperations.text.toString()
+            if (str.isEmpty())
+                setTextFields("tan(")
+            else if(str[str.length - 1] != '.')
+                setTextFields("tan(")
+        }
         angleUnitBtn.setOnClickListener {
             if (angleUnitBtn.text.toString() == "rad")
                 angleUnitBtn.text = getString(R.string.deg)
@@ -278,7 +307,8 @@ class MainActivity : AppCompatActivity() {
             val str = calcOperations.text.toString()
             if (str[str.length - 1] == op)
                 return
-            if (isNotOperation(str[str.length - 1]) && str[str.length - 1] != '.')
+            if ((isNotOperation(str[str.length - 1]) || str[str.length - 1] == '!') &&
+                str[str.length - 1] != '.')
                 if (op == '-' || str[str.length - 1] != '(')
                     calcOperations.text = str.plus(op)
         } catch (e: Exception) {
@@ -315,14 +345,18 @@ class MainActivity : AppCompatActivity() {
                 }
             }
             else {
-                val listOfInd = listOf(factStr.lastIndexOf('+'),
+                val listOfInd = listOf(
+                    factStr.lastIndexOf('+'),
                     factStr.lastIndexOf('-'),
                     factStr.lastIndexOf('*'),
                     factStr.lastIndexOf('/'))
                 firstIndex = listOfInd.maxOrNull() ?: 0
                 if (firstIndex == -1)
                     firstIndex = 0
+                else
+                    firstIndex += 1
                 factStr = factStr.substring(firstIndex, factStr.length)
+                Log.d("Factorial", "$factStr | $firstIndex")
             }
             val firstPart = if (firstIndex != 0)
                 str.substring(0, firstIndex + 1)

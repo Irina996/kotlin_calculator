@@ -32,19 +32,17 @@ def getVersionName = { ->
     }
 }
 
+def keystorePropertiesFile = file('G:\\Ira\\PPO\\app\\keystore.properties');
+def keystoreProperties = new Properties()
+keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+
 android {
     signingConfigs {
-        debug {
-            storeFile file('G:\\Ira\\androidKeyStore.jks')
-            storePassword '27i28r22a'
-            keyAlias 'keyForCalculator'
-            keyPassword '27i28r22a'
-        }
         release {
-            storeFile file('G:\\Ira\\PPO\\calcKeyStore.jks')
-            storePassword '27i28r22a'
-            keyPassword '27i28r22a'
-            keyAlias 'calcRealeseKey'
+            storeFile file(keystoreProperties['storeFile'])
+            storePassword keystoreProperties['storePassword']
+            keyAlias keystoreProperties['keyAlias']
+            keyPassword keystoreProperties['keyPassword']
         }
     }
     compileSdk 31
@@ -70,7 +68,7 @@ android {
             versionCode getVersionCode()
             versionName getVersionName()
         }
-        /*create("demo") {
+        create("demo") {
             // Assigns this product flavor to the "version" flavor dimension.
             // If you are using only one dimension, this property is optional,
             // and the plugin automatically assigns all the module's flavors to
@@ -78,7 +76,7 @@ android {
             dimension = "version"
             applicationIdSuffix = ".demo"
             versionNameSuffix = "-demo"
-        }*/
+        }
     }
 
     buildTypes {
