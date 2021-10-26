@@ -32,7 +32,7 @@ def getVersionName = { ->
     }
 }
 
-def keystorePropertiesFile = file('G:\\Ira\\PPO\\app\\keystore.properties');
+def keystorePropertiesFile = rootProject.file('app\\keystore.properties');
 def keystoreProperties = new Properties()
 keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
 
